@@ -8,16 +8,29 @@ const STARTINGINPUT = {
   Return: 6,
   duration: 10,
 };
+
 function App() {
-  const [userInput, setUserInput] = useState();
-  function handleInput() {
-    
+  const [userInput, setUserInput] = useState(STARTINGINPUT);
+  console.log("hi");
+  console.log(userInput);
+  function handleInput(newInitial, newAnnual, newReturn, newDuration) {
+    setUserInput(() => {
+      const newInput = {
+        initial: newInitial,
+        annual: newAnnual,
+        Return: newReturn,
+        duration: newDuration,
+      };
+      return newInput;
+    });
   }
 
-  return;
-  <main>
-    <Header />
-  </main>;
+  return (
+    <main>
+      <Header />
+      <UserInput handleInput={handleInput} data={userInput} />
+    </main>
+  );
 }
 
 export default App;
