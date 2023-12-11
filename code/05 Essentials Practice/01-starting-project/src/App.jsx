@@ -1,35 +1,37 @@
 import Header from "./components/Header";
 import { useState } from "react";
 import UserInput from "./components/UserInput";
-
-const STARTINGINPUT = {
-  initial: 10000,
-  annual: 1200,
-  Return: 6,
-  duration: 10,
-};
+import Results from "./components/Results";
 
 function App() {
+  const STARTINGINPUT = {
+    initial: 10000,
+    annual: 1200,
+    Return: 6,
+    duration: 10,
+  };
+
   const [userInput, setUserInput] = useState(STARTINGINPUT);
-  console.log("hi");
-  console.log(userInput);
-  function handleInput(newInitial, newAnnual, newReturn, newDuration) {
-    setUserInput(() => {
-      const newInput = {
-        initial: newInitial,
-        annual: newAnnual,
-        Return: newReturn,
-        duration: newDuration,
+  function handleInput(inputType, newValue) {
+    setUserInput((prevInput) => {
+      return {
+        ...prevInput,
+        [inputType]: +newValue,
       };
-      return newInput;
     });
   }
 
+  const validInput = userInput.duration >= 1;
+
   return (
-    <main>
+    <>
       <Header />
-      <UserInput handleInput={handleInput} data={userInput} />
-    </main>
+      <UserInput handleInput={handleInput} userInput={userInput} />
+      {!validInput && (
+        <p className="center">Please put in positive duration.</p>
+      )}
+      {validInput && <Results userInput={userInput} />}
+    </>
   );
 }
 
